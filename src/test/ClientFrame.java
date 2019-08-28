@@ -87,8 +87,8 @@ public class ClientFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				String be_nick = nickName;
 				setNickname(name_input.getText().toString());
-				name_input.setText("");
-				chat_room.append("<"+ be_nick + "님이 '" + nickName + "' (으)로 이름을 변경하였습니다.>\n");
+				sendMessage("<"+ be_nick + "님이 '" + nickName + "' (으)로 이름을 변경하였습니다.>\n");
+				name_input.setText("");				
 			}
 		});
 		contentPane.add(modify_btn);
@@ -167,7 +167,7 @@ public class ClientFrame extends JFrame{
 		public void run() {
 			try {
 				socket = new Socket(ip, Integer.parseInt(port));
-				chat_room.append("< 채팅방에 참여하였습니다. >");
+				chat_room.append("< 채팅방에 참여하였습니다. >\n");
 				
 				dis = new DataInputStream(socket.getInputStream());
 				dos = new DataOutputStream(socket.getOutputStream());

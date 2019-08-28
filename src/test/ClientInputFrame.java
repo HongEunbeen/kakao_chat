@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -14,10 +15,15 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 	private JTextField name_input;
 	private JLabel title_text,ip_text,port_text,name_text,back_img,home_img;
 	private JButton start_btn;
+	private Font font1, font2, font3;
 	
 	public ClientInputFrame() {
 		setBounds(0, 0, 414, 736);
 		setLayout(null);
+		
+		font1 = new Font("µ¸¿ò", Font.PLAIN, 25);
+		font2 = new Font("µ¸¿ò", Font.PLAIN, 40);
+		font3 = new Font("µ¸¿ò", Font.PLAIN, 50);
 		
 		//input
 		ip_input = new JTextField();
@@ -46,7 +52,12 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 		ip_text.setBounds(21, 267 ,53, 48);
 		port_text.setBounds(2, 324 ,91, 48);
 		name_text.setBounds(21, 413,52,30);
-			
+		
+		title_text.setFont(font3);
+		ip_text.setFont(font1);
+		port_text.setFont(font1);
+		name_text.setFont(font1);
+		
 		add(title_text);
 		add(ip_text);
 		add(port_text);	

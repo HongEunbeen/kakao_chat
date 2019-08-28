@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -30,7 +31,7 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 	private JLabel home_img;
 	private JButton start_btn;
 	String hostAddress;
-	
+
 	ServerSocket serverSocket;
 
 	Socket socket;
@@ -46,6 +47,7 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		//input
 		try {
 			hostAddress = InetAddress.getLocalHost().getHostAddress();
+			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
@@ -108,6 +110,7 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 			String name = name_input.getText().toString();
 			String ip = ip_input.getText().toString();
 			String port = port_input.getText().toString();
+			
 			ServerFrame b = new ServerFrame(name,ip,port);
 		}
 	}

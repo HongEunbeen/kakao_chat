@@ -22,7 +22,7 @@ public class MainFrame extends JFrame implements ActionListener{
 		setTitle("3617 È«Àººó");
 		setSize(414, 736);
 		JPanel panel = new JPanel();
-        setContentPane(panel);      
+        setContentPane(panel);
 		setLayout(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		panel.setBackground(new Color(255,235,51));

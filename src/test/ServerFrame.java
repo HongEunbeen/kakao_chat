@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -60,6 +61,8 @@ public class ServerFrame extends JFrame {
 		this.ip = ip;
 		this.port = port;	
 	
+		
+
 		setTitle("Server");
 		setBounds(0, 0, 414, 736);
 		contentPane = new JPanel();
@@ -102,8 +105,9 @@ public class ServerFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String be_nick = nickName;
 				setNickname(name_input.getText().toString());
-				name_input.setText("");
+				sendMessage("<"+ be_nick + "님이 '" + nickName + "' (으)로 이름을 변경하였습니다.>\n");
 				chat_room.append("<"+ be_nick + "님이 '" + nickName + "' (으)로 이름을 변경하였습니다.>\n");
+				name_input.setText("");
 			}
 		});
 		contentPane.add(modify_btn);
@@ -179,16 +183,19 @@ public class ServerFrame extends JFrame {
 		public void run() {	
 			
 			try {  //서버 소켓 생성 작업
-				Collections.synchronizedMap(clientMap); //교통정리를 해준다.( clientMap을 네트워크 처리해주는것 )  
-				serverSocket = new ServerSocket(Integer.parseInt(port));
+				
+				
+				Collections.synchronizedMap(clientMap); //교통정리를 해준다.
+				serverSocket = new ServerSocket(Integer.parseInt(port));////서버소켓을 생성하여  포트와 결합(bind)시킨다
+			
 				chat_room.append("<채팅방이 개설되었습니다.>\n");
 				chat_room.append("<참여자를 기다리는 중입니다.>\n");				
 				
 				while(true) {
-					socket = serverSocket.accept();//클라이언트가 접속할때까지 커서(스레드)가 대기
-					chat_room.append(ip +" : " + port + "님이 접속하셨습니다.\n");
+					socket = serverSocket.accept();//클라이언트가 접속할때까지 커서(스레드)가 대기한다.
+					chat_room.append("<" + ip +" : " + port + "님이 접속하셨습니다.>\n");
 					
-					Receiver receiver = new Receiver(socket);
+					Receiver receiver = new Receiver(socket);//Receiver를 이용해서 네트워크 소켓을 받아서 계속듣고 보내는 일을 한다.
 	                receiver.start();
 				}				
 			} catch (IOException e) {
@@ -197,17 +204,16 @@ public class ServerFrame extends JFrame {
 		}
 	}
 	class Receiver extends Thread {
-        /** XXX 리시버가 할일 : 네트워크 소켓을 받아서 계속듣고 보내는 일. */
         private DataInputStream in; // 데이터 입력 스트림
         private DataOutputStream out; // 데이터 아웃풋 스트림
-        private String nick;
+        private String nick;//nickname
  
         public Receiver(Socket socket) {
             try {
                 out = new DataOutputStream(socket.getOutputStream());
                 in = new DataInputStream(socket.getInputStream());
-                nick = in.readUTF();
-                addClient(nick,out);
+                nick = name;
+                addClient(nick,out);//새로운 클라이언트를 추가한다.
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -232,7 +238,6 @@ public class ServerFrame extends JFrame {
         if(!name.equals("")) {
         	String message = "<" + ip + "님께서" + nick + "(으)로 이름은 변경하였습니다. >\n";
             sendMessage(message);
-            chat_room.append(message);
         }
         clientMap.put(nick, out);
         
