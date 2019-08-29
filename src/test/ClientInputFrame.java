@@ -85,10 +85,11 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource().equals(start_btn)) {
-			 if(name_input.equals("") || ip_input.equals("")  || port_input.equals("") ) {
+			 if(ip_input.equals("")  || port_input.equals("") ) {
 				 name_input.setText("");
 				 ip_input.setText("");
 				 port_input.setText("");
+				 return;
 		      }else {
 		    	  String name = name_input.getText().toString();
 		    	  String ip = ip_input.getText().toString();

@@ -47,7 +47,6 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		//input
 		try {
 			hostAddress = InetAddress.getLocalHost().getHostAddress();
-			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}

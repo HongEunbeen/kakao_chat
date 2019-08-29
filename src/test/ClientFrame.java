@@ -28,7 +28,7 @@ import javax.swing.JTextField;
 public class ClientFrame extends JFrame{
 	static String name = "", ip = "", port = "";
 	private String nickName;
-	
+	static int my_port = 0;
 	static String hostAddress;
 	int hostPort;
 	Socket socket;
@@ -62,7 +62,8 @@ public class ClientFrame extends JFrame{
 			// TODO Auto-generated catch block
 			e2.printStackTrace();
 		}
-		my_ip_text = new JLabel(hostAddress + " : " + port);
+		
+		my_ip_text = new JLabel(hostAddress);
 		
 		my_ip_text.setBounds(135, 12, 232, 20);		
 		back_btn.setBounds(13, 12, 52, 55);
@@ -152,6 +153,8 @@ public class ClientFrame extends JFrame{
 		clientThread.setDaemon(true);
 		clientThread.start();
 		
+		
+		
 		addWindowListener(new WindowAdapter() {			
 			@Override //클라이언트 프레임에 window(창) 관련 리스너 추가
 			public void windowClosing(WindowEvent e) {				
@@ -175,15 +178,15 @@ public class ClientFrame extends JFrame{
 		public void run() {
 			try {
 				socket = new Socket(ip, Integer.parseInt(port));
-				chat_room.append("< 채팅방에 참여하였습니다. >\n");
-				
+				chat_room.append("<" + hostAddress + " : " + socket.getLocalPort() + "님이 채팅방에 참여하였습니다. >\n");
 				dis = new DataInputStream(socket.getInputStream());
 				dos = new DataOutputStream(socket.getOutputStream());
 			
 	            //접속하자마자 닉네임 전송하면, 서버가 닉네임으로 인식 
 				dos.writeUTF(name);
-	            System.out.println("클라이언트 : 닉네임 전송완료 ");	
+	            System.out.println(socket.getLocalPort() + socket.getInetAddress().getHostAddress());
 	            
+	            my_port = socket.getLocalPort();
 	            while(dis!=null){
 	            	String msg = dis.readUTF();
 	            	chat_room.append(msg);

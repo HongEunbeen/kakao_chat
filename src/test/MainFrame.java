@@ -19,6 +19,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	private JLabel MainImage;
 	private JButton ServerBtn, ClientBtn;
 	public MainFrame() {
+		
 		setTitle("3617 È«Àººó");
 		setSize(414, 736);
 		JPanel panel = new JPanel();
