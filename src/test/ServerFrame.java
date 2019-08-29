@@ -124,7 +124,6 @@ public class ServerFrame extends JFrame {
 			setNickname(this.name);
 		}
 		
-		
 		send_btn.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -181,8 +180,7 @@ public class ServerFrame extends JFrame {
 		public void run() {	
 			
 			try {  //서버 소켓 생성 작업
-				
-				
+							
 				Collections.synchronizedMap(clientMap); //교통정리를 해준다.
 				serverSocket = new ServerSocket(Integer.parseInt(port));////서버소켓을 생성하여  포트와 결합(bind)시킨다
 			
@@ -191,7 +189,7 @@ public class ServerFrame extends JFrame {
 				
 				while(true) {
 					socket = serverSocket.accept();//클라이언트가 접속할때까지 커서(스레드)가 대기한다.
-					chat_room.append("<" + socket.getInetAddress().getHostAddress() +" : " + socket.getPort() + "님이 접속하셨습니다.>\n");
+					chat_room.append("<" + ip +" : " + socket.getPort()+ "님이 접속하셨습니다.>\n");
 					
 					Receiver receiver = new Receiver(socket);//Receiver를 이용해서 네트워크 소켓을 받아서 계속듣고 보내는 일을 한다.
 	                receiver.start();
