@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -40,7 +41,7 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 
 	DataOutputStream dos;
 
-	
+	private Font font1, font2, font3;
 	public ServerInputFrame() {	
 		setBounds(0, 0, 414, 736);
 		setLayout(null);	
@@ -51,6 +52,11 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 			e.printStackTrace();
 		}
 		System.out.println("¼­¹ö ÀÎÇ²" + hostAddress);
+		
+
+		font1 = new Font("µ¸¿ò", Font.PLAIN, 25);
+		font2 = new Font("µ¸¿ò", Font.PLAIN, 40);
+		font3 = new Font("µ¸¿ò", Font.PLAIN, 50);
 		
 		ip_input = new JTextField(hostAddress);
 		port_input = new JTextField();
@@ -83,6 +89,11 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		add(ip_text);
 		add(port_text);	
 		add(name_text);
+		
+		title_text.setFont(font3);
+		ip_text.setFont(font1);
+		port_text.setFont(font1);
+		name_text.setFont(font1);
 		
 		//btn
 		start_btn = new JButton("¹æ ¸¸µé±â");

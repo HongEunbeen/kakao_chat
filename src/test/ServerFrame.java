@@ -118,7 +118,7 @@ public class ServerFrame extends JFrame {
 		scrollPane.setViewportView(chat_room);
 		
 		//nickname
-		if(this.name.equals("")) {
+		if(this.name.equals("") || name_input.getText().equals(null)) {
 			setNickname(this.ip);
 		}else {
 			setNickname(this.name);
@@ -208,7 +208,7 @@ public class ServerFrame extends JFrame {
             try {
                 out = new DataOutputStream(socket.getOutputStream());
                 in = new DataInputStream(socket.getInputStream());
-                nick = nickName;
+                nick = name;
                 addClient(nick,out);//새로운 클라이언트를 추가한다.
             } catch (IOException e) {
                 e.printStackTrace();

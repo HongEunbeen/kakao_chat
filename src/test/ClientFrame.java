@@ -186,7 +186,7 @@ public class ClientFrame extends JFrame{
 				dos.writeUTF(name);
 	            System.out.println(socket.getLocalPort() + socket.getInetAddress().getHostAddress());
 	            
-	            my_port = socket.getLocalPort();
+	            
 	            while(dis!=null){
 	            	String msg = dis.readUTF();
 	            	chat_room.append(msg);
