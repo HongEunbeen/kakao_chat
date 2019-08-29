@@ -29,7 +29,8 @@ public class ClientFrame extends JFrame{
 	static String name = "", ip = "", port = "";
 	private String nickName;
 	
-	String hostAddress;
+	static String hostAddress;
+	int hostPort;
 	Socket socket;
 	DataInputStream dis;
 	DataOutputStream dos;
@@ -39,6 +40,7 @@ public class ClientFrame extends JFrame{
 	JTextField name_input, content_input;
 	JButton modify_btn,back_btn, send_btn;
 	JTextArea chat_room;
+
 	
 	public ClientFrame(String name,String ip,String port) {
 		this.name = name;
@@ -54,7 +56,13 @@ public class ClientFrame extends JFrame{
 		back_btn = new JButton(new ImageIcon("img\\back.png"));
 		ip_text = new JLabel("³»  IP");
 		send_btn = new JButton(new ImageIcon("img\\send.png"));
-		my_ip_text = new JLabel(ip + " : " + port);
+		try {
+			hostAddress = InetAddress.getLocalHost().getHostAddress();
+		} catch (UnknownHostException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		my_ip_text = new JLabel(hostAddress + " : " + port);
 		
 		my_ip_text.setBounds(135, 12, 232, 20);		
 		back_btn.setBounds(13, 12, 52, 55);
@@ -103,7 +111,7 @@ public class ClientFrame extends JFrame{
 		
 		//nickname
 		if(this.name.equals("")) {
-			setNickname(this.ip);
+			setNickname(hostAddress);
 		}else {
 			setNickname(this.name);
 		}
@@ -112,7 +120,7 @@ public class ClientFrame extends JFrame{
 		send_btn.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			  String msg =nickName+" : "+ content_input.getText() + "\n";
+			  String msg = nickName+" : "+ content_input.getText() + "\n";
 		      sendMessage(msg);
 		      content_input.setText("");
 			}
@@ -128,7 +136,7 @@ public class ClientFrame extends JFrame{
 				int keyCode = e.getKeyCode();
 				switch(keyCode) {
 				case KeyEvent.VK_ENTER:
-					String msg =nickName+" : "+ content_input.getText() + "\n";
+					String msg = nickName+" : "+ content_input.getText() + "\n";
 					sendMessage(msg);
 					content_input.setText("");
 					break;
