@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 public class ClientInputFrame extends JFrame implements ActionListener{
@@ -18,8 +20,14 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 	private Font font1, font2, font3;
 	
 	public ClientInputFrame() {
-		setBounds(0, 0, 414, 736);
-		setLayout(null);
+		setBounds(430, 0, 414, 736);
+		
+		setTitle("CLIENT 정보를 입력하세요");
+		
+		JPanel panel = new JPanel();
+        setContentPane(panel);
+		panel.setBackground(new Color(255,235,51));
+		panel.setLayout(null);
 		
 		font1 = new Font("돋움", Font.PLAIN, 25);
 		font2 = new Font("돋움", Font.PLAIN, 40);
@@ -38,9 +46,13 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 		port_input.setColumns(10);
 		name_input.setColumns(20);
 		
-		add(ip_input);		
-		add(port_input);
-		add(name_input);
+		ip_input.setFont(font1);
+		port_input.setFont(font1);
+		name_input.setFont(font1);
+		
+		panel.add(ip_input);		
+		panel.add(port_input);
+		panel.add(name_input);
 		
 		//text
 		title_text = new JLabel("kakao talk");
@@ -58,16 +70,18 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 		port_text.setFont(font1);
 		name_text.setFont(font1);
 		
-		add(title_text);
-		add(ip_text);
-		add(port_text);	
-		add(name_text);
+		panel.add(title_text);
+		panel.add(ip_text);
+		panel.add(port_text);	
+		panel.add(name_text);
 		
 		//btn
 		start_btn = new JButton("채팅 참여하기");
+		start_btn.setFont(font2);
 		start_btn.setBounds(76, 542, 262, 67);
 		start_btn.addActionListener(this);
-		add(start_btn);
+		start_btn.setBackground(new Color(246, 246, 246));
+		panel.add(start_btn);
 		
 		//img
 		back_img = new JLabel();
@@ -76,8 +90,8 @@ public class ClientInputFrame extends JFrame implements ActionListener{
 		back_img.setBounds(12,26,40,40);
 		home_img.setBounds(243, 26, 40,40);
 	
-		add(back_img);
-		add(home_img);
+		panel.add(back_img);
+		panel.add(home_img);
 		
 		setVisible(true);
 		

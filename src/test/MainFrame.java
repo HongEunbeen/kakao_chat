@@ -2,6 +2,7 @@ package test;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,10 +19,18 @@ import javax.swing.JPanel;
 public class MainFrame extends JFrame implements ActionListener{
 	private JLabel MainImage;
 	private JButton ServerBtn, ClientBtn;
+	private Font font1, font2, font3;
+	
 	public MainFrame() {
 		
 		setTitle("3617 È«Àººó");
 		setSize(414, 736);
+		
+
+		font1 = new Font("µ¸¿ò", Font.PLAIN, 25);
+		font2 = new Font("µ¸¿ò", Font.PLAIN, 25);
+		font3 = new Font("µ¸¿ò", Font.PLAIN, 50);
+		
 		JPanel panel = new JPanel();
         setContentPane(panel);
 		setLayout(null);
@@ -37,9 +46,14 @@ public class MainFrame extends JFrame implements ActionListener{
 		ServerBtn = new JButton("Server");
 		ClientBtn = new JButton("Client");
 		
-		ServerBtn.setBounds(60, 438, 135, 135);
-		ClientBtn.setBounds(222, 438, 135, 135);
+		ServerBtn.setBounds(60, 500, 135, 135);
+		ClientBtn.setBounds(222, 500, 135, 135);
 		
+		ServerBtn.setBackground(new Color(246, 246, 246));
+		ClientBtn.setBackground(new Color(246, 246, 246));
+		
+		ServerBtn.setFont(font2);
+		ClientBtn.setFont(font2);
 		
 		ClientBtn.addActionListener(this);
 		ServerBtn.addActionListener(this);

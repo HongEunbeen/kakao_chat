@@ -1,5 +1,8 @@
 package test;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -50,7 +53,7 @@ public class ServerFrame extends JFrame {
 	JTextField name_input, content_input;
 	JButton modify_btn,back_btn, send_btn;
 	JTextArea chat_room;
-	
+	private Font font1, font2, font3;
 	
 	
 	private String msg;
@@ -61,16 +64,36 @@ public class ServerFrame extends JFrame {
 		this.ip = ip;
 		this.port = port;	
 
+
+		font1 = new Font("돋움", Font.PLAIN, 20);
+		font2 = new Font("돋움", Font.PLAIN, 22);
+		font3 = new Font("돋움", Font.PLAIN, 50);
+		
 		setTitle("Server");
-		setBounds(0, 0, 414, 736);
+		setBounds(850, 0, 414, 736);
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 		
-		back_btn = new JButton(new ImageIcon("img\\back.png"));
+		contentPane.setBackground(new Color(180, 201, 220));
+		
+		Image backImg = new ImageIcon("img\\back.png").getImage();
+		Image cutBackImg = backImg.getScaledInstance(52, 52, java.awt.Image.SCALE_SMOOTH);
+		ImageIcon cutBackIcon = new ImageIcon(cutBackImg);
+		
+		Image sendImg = new ImageIcon("img\\send.png").getImage();
+		Image cutSendImg = sendImg.getScaledInstance(52, 52, java.awt.Image.SCALE_SMOOTH);
+		ImageIcon cutSendIcon = new ImageIcon(cutSendImg);
+		
+		
+		back_btn = new JButton(cutBackIcon);
+		send_btn = new JButton(cutSendIcon);
+		
 		ip_text = new JLabel("내  IP");
-		send_btn = new JButton(new ImageIcon("img\\send.png"));
 		my_ip_text = new JLabel(ip + " : " + port);
+		
+		ip_text.setFont(new Font("돋움",Font.PLAIN,15));
+		my_ip_text.setFont(font1);
 		
 		my_ip_text.setBounds(135, 12, 232, 20);		
 		back_btn.setBounds(13, 12, 52, 55);
@@ -92,11 +115,15 @@ public class ServerFrame extends JFrame {
 		content_input.setColumns(30);
 		name_input.setColumns(30);
 		
+		name_input.setFont(font2);
+		content_input.setFont(font2);
+		
 		contentPane.add(name_input);
 		contentPane.add(content_input);
-	
+		
 		//btn
 		modify_btn = new JButton("수정");
+		modify_btn.setBackground(new Color(246, 246, 246));
 		modify_btn.setBounds(308, 36, 74, 34);
 		modify_btn.addActionListener(new ActionListener() {			
 			@Override
@@ -113,8 +140,12 @@ public class ServerFrame extends JFrame {
 		//area
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(14, 84, 368, 539);
-		contentPane.add(scrollPane);		
+		contentPane.add(scrollPane);	
+		
 		chat_room = new JTextArea();
+		chat_room.setFont(new Font("굴림", Font.PLAIN, 18));
+		chat_room.setLineWrap(true);
+		chat_room.setBackground(new Color(180, 201, 220));
 		scrollPane.setViewportView(chat_room);
 		
 		//nickname
@@ -127,7 +158,7 @@ public class ServerFrame extends JFrame {
 		send_btn.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String msg = nickName+" : "+ content_input.getText() + "\n";
+				String msg = nickName+" > "+ content_input.getText() + "\n";
 		        System.out.print(msg);
 		        sendMessage(msg);
 		        chat_room.append(msg);
@@ -143,7 +174,7 @@ public class ServerFrame extends JFrame {
 				int keyCode = e.getKeyCode();
 				switch(keyCode) {
 				case KeyEvent.VK_ENTER:
-					String msg = nickName+" : " +content_input.getText() + "\n";
+					String msg = nickName+" > " +content_input.getText() + "\n";
 			        System.out.print(msg);
 			        sendMessage(msg);
 			        chat_room.append(msg);
@@ -161,7 +192,7 @@ public class ServerFrame extends JFrame {
 		serverThread.start();
 		
 		addWindowListener(new WindowAdapter() {			
-			@Override //클라이언트 프레임에 window(창) 관련 리스너 추가
+			@Override 
 			public void windowClosing(WindowEvent e) {				
 				super.windowClosing(e);
 				try {
@@ -189,13 +220,20 @@ public class ServerFrame extends JFrame {
 				
 				while(true) {
 					socket = serverSocket.accept();//클라이언트가 접속할때까지 커서(스레드)가 대기한다.
-					chat_room.append("<" + socket.getInetAddress().getHostAddress() +" : " + socket.getPort()+ "님이 접속하셨습니다.>\n");
+					chat_room.append("<" + socket.getInetAddress() +" : " + socket.getPort()+ "님이 접속하셨습니다.>\n");
 					
 					Receiver receiver = new Receiver(socket);//Receiver를 이용해서 네트워크 소켓을 받아서 계속듣고 보내는 일을 한다.
 	                receiver.start();
 				}				
 			} catch (IOException e) {
+				e.printStackTrace();
 				chat_room.append("<참여자가 방을 나갔습니다.>\n");
+				try {
+					socket.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		}
 	}
@@ -240,7 +278,7 @@ public class ServerFrame extends JFrame {
     }
     
     public void removeClient(String nick){
-        String message = "<"+ nick + "님이 나가셨습니다.> \n";
+        String message = "<사용자가 나갔습니다.> \n";
         sendMessage(message);
         chat_room.append(message);
         clientMap.remove(nick);

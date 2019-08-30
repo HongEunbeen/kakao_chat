@@ -1,5 +1,6 @@
 package test;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,6 +18,7 @@ import java.net.UnknownHostException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 
@@ -43,8 +45,15 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 
 	private Font font1, font2, font3;
 	public ServerInputFrame() {	
-		setBounds(0, 0, 414, 736);
+		setBounds(430, 0, 414, 736);
 		setLayout(null);	
+		setTitle("SERVER 정보를 입력하세요");
+		
+		JPanel panel = new JPanel();
+        setContentPane(panel);
+		panel.setBackground(new Color(255,235,51));
+		panel.setLayout(null);
+		
 		//input
 		try {
 			hostAddress = InetAddress.getLocalHost().getHostAddress();
@@ -70,9 +79,13 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		port_input.setColumns(10);
 		name_input.setColumns(20);
 		
-		add(ip_input);		
-		add(port_input);
-		add(name_input);
+		ip_input.setFont(font1);
+		port_input.setFont(font1);
+		name_input.setFont(font1);
+		
+		panel.add(ip_input);		
+		panel.add(port_input);
+		panel.add(name_input);
 		
 		//text
 		title_text = new JLabel("kakao talk");
@@ -85,10 +98,10 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		port_text.setBounds(2, 324 ,91, 48);
 		name_text.setBounds(21, 413,52,30);
 			
-		add(title_text);
-		add(ip_text);
-		add(port_text);	
-		add(name_text);
+		panel.add(title_text);
+		panel.add(ip_text);
+		panel.add(port_text);	
+		panel.add(name_text);
 		
 		title_text.setFont(font3);
 		ip_text.setFont(font1);
@@ -97,8 +110,10 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		
 		//btn
 		start_btn = new JButton("방 만들기");
+		start_btn.setFont(font2);
 		start_btn.setBounds(76, 542, 262, 67);
-		add(start_btn);
+		start_btn.setBackground(new Color(246, 246, 246));
+		panel.add(start_btn);
 		
 		//img
 		back_img = new JLabel();
@@ -107,7 +122,7 @@ public class ServerInputFrame  extends JFrame implements ActionListener{
 		back_img.setBounds(12,26,40,40);
 		home_img.setBounds(243, 26, 40,40);
 	
-		add(back_img);
+		panel.add(back_img);
 		add(home_img);
 		
 		start_btn.addActionListener(this);
